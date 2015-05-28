@@ -9,9 +9,12 @@ module Padrino
         app.helpers self
         app.extend ::Padrino::Localization::Urls::ClassMethods
         app.instance_eval do
-          alias :url_without_locale :url
-          alias :url :url_with_locale
-          alias :url_for :url_with_locale
+          unless @localization_aliases_created
+            alias :url_without_locale :url
+            alias :url :url_with_locale
+            alias :url_for :url_with_locale
+          end
+          @localization_aliases_created = true
         end
       end
 
